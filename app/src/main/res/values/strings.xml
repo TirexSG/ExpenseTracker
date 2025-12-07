@@ -1,3 +1,25 @@
 <resources>
-    <string name="app_name">ExpenseTracker</string>
+    <string name="app_name">Expense Tracker</string>
+
+    <string name="payment_method_cash">Efectivo</string>
+    <string name="payment_method_credit_card">Tarjeta de Crédito</string>
+    <string name="payment_method_debit_card">Tarjeta de Débito</string>
+    <string name="payment_method_bank_transfer">Transferencia Bancaria</string>
+    <string name="payment_method_digital_wallet">Cartera Digital</string>
+
+    <!-- Categories -->
+    <string name="category_food">Comida</string>
+    <string name="category_groceries">Supermercado</string>
+    <string name="category_transport">Transporte</string>
+    <string name="category_housing">Vivienda</string>
+    <string name="category_utilities">Servicios</string>
+    <string name="category_subscriptions">Suscripciones</string>
+    <string name="category_entertainment">Ocio</string>
+    <string name="category_shopping">Compras</string>
+    <string name="category_healthcare">Salud</string>
+    <string name="category_education">Educación</string>
+    <string name="category_sports">Deportes</string>
+    <string name="category_other">Otros</string>
+
 </resources>
+

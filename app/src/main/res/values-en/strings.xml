@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">Expense Tracker</string>
+    <string name="payment_method_cash">Cash</string>
+    <string name="payment_method_credit_card">Credit Card</string>
+    <string name="payment_method_debit_card">Debit Card</string>
+    <string name="payment_method_bank_transfer">Bank Transfer</string>
+    <string name="payment_method_digital_wallet">Digital Wallet</string>
+
+    <!-- Categories -->
+    <string name="category_food">Food</string>
+    <string name="category_groceries">Groceries</string>
+    <string name="category_transport">Transportation</string>
+    <string name="category_housing">Housing</string>
+    <string name="category_utilities">Utilities</string>
+    <string name="category_subscriptions">Subscriptions</string>
+    <string name="category_entertainment">Entertainment</string>
+    <string name="category_shopping">Shopping</string>
+    <string name="category_healthcare">Healthcare</string>
+    <string name="category_education">Education</string>
+    <string name="category_sports">Sports</string>
+    <string name="category_other">Other</string>
+</resources>
