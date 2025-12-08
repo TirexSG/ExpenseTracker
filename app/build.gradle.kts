@@ -86,6 +86,9 @@ dependencies {
     implementation(libs.androidx.room.ktx)
     ksp(libs.androidx.room.compiler)
 
+    // Gson (para TypeConverters)
+    implementation(libs.gson)
+
     // Coroutines
     implementation(libs.kotlinx.coroutines.android)
 

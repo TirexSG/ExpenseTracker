@@ -10,6 +10,9 @@ lifecycleRuntimeKtx = "2.10.0"
 activityCompose = "1.12.1"
 composeIconsExtended = "1.7.8"
 
+# TypeConverters
+gson = "2.13.2"
+
 # Compose
 composeBom = "2025.12.00"
 
@@ -65,6 +68,9 @@ androidx-room-runtime = { group = "androidx.room", name = "room-runtime", versio
 androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
 androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 androidx-room-testing = { group = "androidx.room", name = "room-testing", version.ref = "room" }
+
+# TypeConverters
+gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
 
 # Coroutines
 kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutines" }
