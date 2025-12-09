@@ -19,4 +19,9 @@
     <string name="category_education">Education</string>
     <string name="category_sports">Sports</string>
     <string name="category_other">Other</string>
+
+    <!-- Navigation -->
+    <string name="nav_home">Home</string>
+    <string name="nav_statistics">Statistics</string>
+
 </resources>

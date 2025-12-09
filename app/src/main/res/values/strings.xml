@@ -21,5 +21,9 @@
     <string name="category_sports">Deportes</string>
     <string name="category_other">Otros</string>
 
+    <!-- Navigation -->
+    <string name="nav_home">Inicio</string>
+    <string name="nav_statistics">Estadísticas</string>
+
 </resources>
 
