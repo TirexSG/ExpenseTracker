@@ -25,5 +25,16 @@
     <string name="nav_home">Inicio</string>
     <string name="nav_statistics">Estadísticas</string>
 
+    <!-- Home Screen -->
+    <string name="home_total_this_month">Total este mes</string>
+    <string name="home_empty_title">No hay gastos registrados</string>
+    <string name="home_empty_subtitle">Toca + para añadir tu primer gasto</string>
+    <string name="home_error_title">Error</string>
+    <string name="home_retry_button">Reintentar</string>
+
+    <!-- Common -->
+    <string name="loading">Cargando…</string>
+    <string name="add_expense_description">Añadir gasto</string>
+
 </resources>
 

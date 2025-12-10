@@ -24,4 +24,15 @@
     <string name="nav_home">Home</string>
     <string name="nav_statistics">Statistics</string>
 
+    <!-- Home Screen -->
+    <string name="home_total_this_month">Total this month</string>
+    <string name="home_empty_title">No expenses registered</string>
+    <string name="home_empty_subtitle">Tap + to add your first expense</string>
+    <string name="home_error_title">Error</string>
+    <string name="home_retry_button">Retry</string>
+
+    <!-- Common -->
+    <string name="loading">Loading…</string>
+    <string name="add_expense_description">Add expense</string>
+
 </resources>
