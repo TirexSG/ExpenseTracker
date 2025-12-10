@@ -22,7 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.tirexdev.expensetracker.R
 import com.tirexdev.expensetracker.domain.model.Expense
@@ -79,7 +79,7 @@ private fun HomeContent(
     expenses: List<Expense>,
     totalThisMonth: Double,
     onExpenseClick: (String) -> Unit,
-    onDeleteExpense: (String) -> Unit,
+    onDeleteExpense: (String) -> Unit, // Todo
     modifier: Modifier = Modifier
 ) {
     if (expenses.isEmpty()) {
