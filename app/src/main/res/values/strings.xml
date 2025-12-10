@@ -36,5 +36,19 @@
     <string name="loading">Cargando…</string>
     <string name="add_expense_description">Añadir gasto</string>
 
+    <!-- Editor errors -->
+    <string name="error_title_empty">El título no puede estar vacío</string>
+    <string name="error_amount_invalid">Introduce un importe válido mayor a 0</string>
+
+    <!-- Editor Screen -->
+    <string name="editor_title_new">Nuevo Gasto</string>
+    <string name="editor_title_edit">Editar Gasto</string>
+    <string name="editor_label_title">Título</string>
+    <string name="editor_placeholder_title">Ej: Almuerzo en restaurante</string>
+    <string name="editor_label_amount">Monto</string>
+    <string name="editor_label_category">Categoría</string>
+    <string name="editor_button_save">Guardar</string>
+    <string name="back_description">Volver</string>
+
 </resources>
 

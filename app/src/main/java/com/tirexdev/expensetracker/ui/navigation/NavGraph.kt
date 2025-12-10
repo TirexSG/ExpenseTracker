@@ -5,7 +5,6 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.toRoute
 import com.tirexdev.expensetracker.ui.editor.ExpenseEditorScreen
 import com.tirexdev.expensetracker.ui.home.HomeScreen
 import com.tirexdev.expensetracker.ui.statistics.StatisticsScreen
@@ -35,10 +34,8 @@ fun ExpenseNavGraph(
             StatisticsScreen()
         }
 
-        composable<Routes.ExpenseEditor> { backStackEntry ->
-            val args: Routes.ExpenseEditor = backStackEntry.toRoute()
+        composable<Routes.ExpenseEditor> {
             ExpenseEditorScreen(
-                expenseId = args.expenseId,
                 onNavigateBack = { navController.popBackStack() }
             )
         }

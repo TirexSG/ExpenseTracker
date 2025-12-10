@@ -35,4 +35,18 @@
     <string name="loading">Loading…</string>
     <string name="add_expense_description">Add expense</string>
 
+    <!-- Editor errors -->
+    <string name="error_title_empty">Title cannot be empty</string>
+    <string name="error_amount_invalid">Enter a valid amount greater than 0</string>
+
+    <!-- Editor Screen -->
+    <string name="editor_title_new">New Expense</string>
+    <string name="editor_title_edit">Edit Expense</string>
+    <string name="editor_label_title">Title</string>
+    <string name="editor_placeholder_title">E.g: Lunch at restaurant</string>
+    <string name="editor_label_amount">Amount</string>
+    <string name="editor_label_category">Category</string>
+    <string name="editor_button_save">Save</string>
+    <string name="back_description">Back</string>
+
 </resources>
