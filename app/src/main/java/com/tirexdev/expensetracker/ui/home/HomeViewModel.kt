@@ -3,6 +3,7 @@ package com.tirexdev.expensetracker.ui.home
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.tirexdev.expensetracker.domain.model.Expense
 import com.tirexdev.expensetracker.domain.usecase.ExpenseUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -12,6 +13,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 import javax.inject.Inject
+import kotlin.collections.filter
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
@@ -62,9 +64,9 @@ class HomeViewModel @Inject constructor(
         loadExpenses()
     }
 
-    private fun calculateTotalThisMonth(expenses: List<com.tirexdev.expensetracker.domain.model.Expense>): Double {
+    private fun calculateTotalThisMonth(expenses: List<Expense>): Double {
         val now = LocalDateTime.now()
-        val startOfMonth = now.withDayOfMonth(1).withHour(0).withMinute(0).withSecond(0)
+        val startOfMonth = now.withDayOfMonth(1).withHour(0).withMinute(0).withSecond(0).withNano(0)
 
         return expenses
             .filter { it.date >= startOfMonth }
