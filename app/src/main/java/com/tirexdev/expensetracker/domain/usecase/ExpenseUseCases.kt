@@ -7,5 +7,6 @@ data class ExpenseUseCases @Inject constructor(
     val getExpenseById: GetExpenseByIdUseCase,
     val addExpense: AddExpenseUseCase,
     val updateExpense: UpdateExpenseUseCase,
-    val deleteExpense: DeleteExpenseUseCase
+    val deleteExpense: DeleteExpenseUseCase,
+    val getStatistics: GetExpenseStatisticsUseCase
 )

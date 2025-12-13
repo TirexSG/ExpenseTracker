@@ -34,6 +34,8 @@
     <!-- Common -->
     <string name="loading">Loading…</string>
     <string name="add_expense_description">Add expense</string>
+    <string name="error_title">Oops! Something went wrong</string>
+    <string name="retry_button">Retry</string>
 
     <!-- Editor errors -->
     <string name="error_title_empty">Title cannot be empty</string>
@@ -48,5 +50,15 @@
     <string name="editor_label_category">Category</string>
     <string name="editor_button_save">Save</string>
     <string name="back_description">Back</string>
+    
+    <!-- Statistics Screen -->
+    <string name="statistics_title">Statistics</string>
+    <string name="statistics_total_expenses">Total Expenses</string>
+    <string name="statistics_average_expense">Average Expense</string>
+    <string name="statistics_total_count">Total Transactions</string>
+    <string name="statistics_by_category">Expenses by Category</string>
+    <string name="statistics_no_data">No expenses yet</string>
+    <string name="statistics_total_label">Total</string>
+
 
 </resources>

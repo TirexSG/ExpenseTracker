@@ -35,6 +35,8 @@
     <!-- Common -->
     <string name="loading">Cargando…</string>
     <string name="add_expense_description">Añadir gasto</string>
+    <string name="error_title">¡Vaya! Algo salió mal</string>
+    <string name="retry_button">Reintentar</string>
 
     <!-- Editor errors -->
     <string name="error_title_empty">El título no puede estar vacío</string>
@@ -49,6 +51,15 @@
     <string name="editor_label_category">Categoría</string>
     <string name="editor_button_save">Guardar</string>
     <string name="back_description">Volver</string>
+
+    <!-- Statistics Screen -->
+    <string name="statistics_title">Estadísticas</string>
+    <string name="statistics_total_expenses">Gastos Totales</string>
+    <string name="statistics_average_expense">Gasto Promedio</string>
+    <string name="statistics_total_count">Total de Transacciones</string>
+    <string name="statistics_by_category">Gastos por Categoría</string>
+    <string name="statistics_no_data">Aún no hay gastos</string>
+    <string name="statistics_total_label">Total</string>
 
 </resources>
 

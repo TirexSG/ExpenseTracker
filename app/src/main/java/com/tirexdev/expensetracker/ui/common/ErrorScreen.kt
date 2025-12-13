@@ -1,13 +1,7 @@
 package com.tirexdev.expensetracker.ui.common
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -32,7 +26,7 @@ fun ErrorScreen(
             modifier = Modifier.padding(16.dp)
         ) {
             Text(
-                text = stringResource(R.string.home_error_title),
+                text = stringResource(R.string.error_title),
                 style = MaterialTheme.typography.titleLarge
             )
             Text(
@@ -41,7 +35,7 @@ fun ErrorScreen(
                 textAlign = TextAlign.Center
             )
             Button(onClick = onRetry) {
-                Text(stringResource(R.string.home_retry_button))
+                Text(stringResource(R.string.retry_button))
             }
         }
     }
