@@ -4,7 +4,7 @@ Aplicación Android de seguimiento de gastos construida con arquitectura moderna
 
 ## 📊 Estado del Proyecto
 
-[![Android CI](https://github.com/TirexSG/ExpenseTracker/actions/workflows/android-ci.yml/badge.svg?branch=develop)](https://github.com/TirexSG/ExpenseTracker/actions/workflows/android-ci.yml)
+<img src="https://github.com/TirexSG/ExpenseTracker/actions/workflows/android-ci.yml/badge.svg?branch=develop" alt="Android CI">
 
 ## 🏗️ Stack Tecnológico
 
@@ -19,28 +19,35 @@ Aplicación Android de seguimiento de gastos construida con arquitectura moderna
 
 ## 🧪 Testing
 
-- **Tests unitarios:** 25 tests cubriendo ViewModels y UseCases
+- **Tests:** Incluye tests unitarios (ViewModels, UseCases) y tests instrumentados en `androidTest` (persistencia y base de datos)
 - **Cobertura:** 83% en capa de dominio
 - **CI/CD:** GitHub Actions con testing automatizado
 
-### Ejecutar tests localmente:
-```bash
+**Ejecutar tests unitarios:**
+```
 ./gradlew test
 ```
 
-### Generar reporte de cobertura:
-```bash
+**Ejecutar tests instrumentados (UI y base de datos):**
+```
+./gradlew connectedAndroidTest
+```
+
+**Generar reporte de cobertura:**
+```
 ./gradlew jacocoTestReport
 ```
-El reporte estará en `app/build/reports/jacoco/jacocoTestReport/html/index.html`
+El reporte estará en: `app/build/reports/jacoco/jacocoTestReport/html/index.html`
 
 ## 📱 Funcionalidades
 
 - ✅ Crear y editar gastos
+- ✅ Filtrar gastos por categorías
+- ✅ Eliminar gastos al deslizar
 - ✅ Categorizar gastos (Comida, Transporte, Compras, etc.)
 - ✅ Seguimiento de gastos del mes actual
-- ✅ Eliminar gastos
-- ⏳ Dashboard de estadísticas (próximamente)
+- ✅ Dashboard de estadísticas (MVP disponible)
+- ⏳ Estadísticas avanzadas (próximamente)
 
 ## 🏛️ Arquitectura
 
@@ -49,12 +56,12 @@ Clean Architecture con separación en tres capas:
 - **Domain:** Lógica de negocio (UseCases, Models, interfaces de Repository)
 - **Data:** Fuentes de datos (Room, implementación de Repository)
 - **UI:** Capa de presentación (Compose, ViewModels)
-
-Inyección de dependencias con Hilt.
+- **Inyección de dependencias:** Hilt
 
 ## 🎓 Proyecto de Aprendizaje
 
 Construido para practicar y demostrar:
+
 - Arquitectura limpia y código escalable
 - Testing profesional (patrón AAA, mocking, testing de Flows)
 - Buenas prácticas de Kotlin y Compose
@@ -62,12 +69,13 @@ Construido para practicar y demostrar:
 
 ## 📦 Setup
 
-1. Clonar el repositorio
-2. Abrir en Android Studio Hedgehog+
-3. Sync Gradle
-4. Ejecutar la app
+1. Clona el repositorio.
+2. Abre en Android Studio Hedgehog+.
+3. Sync Gradle.
+4. Ejecuta la app.
 
 **Requisitos:**
+
 - Android Studio Hedgehog+
 - JDK 17
 - Android SDK 26+
