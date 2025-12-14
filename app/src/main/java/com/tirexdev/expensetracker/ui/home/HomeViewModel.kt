@@ -3,6 +3,7 @@ package com.tirexdev.expensetracker.ui.home
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.tirexdev.expensetracker.domain.model.Category
 import com.tirexdev.expensetracker.domain.model.Expense
 import com.tirexdev.expensetracker.domain.usecase.ExpenseUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -13,7 +14,6 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 import javax.inject.Inject
-import kotlin.collections.filter
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
@@ -72,4 +72,13 @@ class HomeViewModel @Inject constructor(
             .filter { it.date >= startOfMonth }
             .sumOf { it.amount }
     }
+
+    // Test?
+    fun selectCategory(category: Category?) {
+        val current = _uiState.value
+        if (current is HomeUiState.Success) {
+            _uiState.value = current.copy(selectedCategory = category)
+        }
+    }
+
 }

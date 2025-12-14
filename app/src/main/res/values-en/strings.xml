@@ -25,11 +25,16 @@
     <string name="nav_statistics">Statistics</string>
 
     <!-- Home Screen -->
-    <string name="home_total_this_month">Total this month</string>
+    <string name="home_total_this_month">Total spent this month</string>
     <string name="home_empty_title">No expenses registered</string>
     <string name="home_empty_subtitle">Tap + to add your first expense</string>
     <string name="home_error_title">Error</string>
     <string name="home_retry_button">Retry</string>
+    <string name="home_category_all">All</string>
+    <string name="home_recent_transactions">Recent Transactions</string>
+    <string name="home_today">Today</string>
+    <string name="home_yesterday">Yesterday</string>
+    <string name="home_total_amount">€%.2f</string>
 
     <!-- Common -->
     <string name="loading">Loading…</string>

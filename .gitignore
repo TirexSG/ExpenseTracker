@@ -15,3 +15,5 @@
 local.properties
 .idea/androidTestResultsUserPreferences.xml
 .idea/deploymentTargetSelector.xml
+.idea/copilot.*.xml
+.idea/deviceManager.xml
