@@ -73,7 +73,6 @@ class HomeViewModel @Inject constructor(
             .sumOf { it.amount }
     }
 
-    // Test?
     fun selectCategory(category: Category?) {
         val current = _uiState.value
         if (current is HomeUiState.Success) {

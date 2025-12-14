@@ -1,8 +1,9 @@
+package com.tirexdev.expensetracker.ui.home
+
 import app.cash.turbine.test
+import com.tirexdev.expensetracker.domain.model.Category
 import com.tirexdev.expensetracker.domain.model.Expense
 import com.tirexdev.expensetracker.domain.usecase.ExpenseUseCases
-import com.tirexdev.expensetracker.ui.home.HomeUiState
-import com.tirexdev.expensetracker.ui.home.HomeViewModel
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
@@ -14,6 +15,9 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNull
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import java.time.LocalDateTime
@@ -40,8 +44,12 @@ class HomeViewModelTest {
         val viewModel = HomeViewModel(mockUseCases)
 
         viewModel.uiState.test {
-            val state = awaitItem() as HomeUiState.Success
-            assert(state.expenses.size == 2)
+            val state = awaitItem()
+            assertTrue(state is HomeUiState.Success)
+            state as HomeUiState.Success
+            assertEquals(2, state.expenses.size)
+            assertEquals(150.0, state.totalThisMonth, 0.001)
+            assertNull(state.selectedCategory)
             cancelAndIgnoreRemainingEvents()
         }
     }
@@ -55,8 +63,10 @@ class HomeViewModelTest {
         val viewModel = HomeViewModel(mockUseCases)
 
         viewModel.uiState.test {
-            val state = awaitItem() as HomeUiState.Error
-            assert(state.message.isNotEmpty())
+            val state = awaitItem()
+            assertTrue(state is HomeUiState.Error)
+            state as HomeUiState.Error
+            assertTrue(state.message.isNotEmpty())
             cancelAndIgnoreRemainingEvents()
         }
     }
@@ -73,8 +83,10 @@ class HomeViewModelTest {
         val viewModel = HomeViewModel(mockUseCases)
 
         viewModel.uiState.test {
-            val state = awaitItem() as HomeUiState.Success
-            assert(state.totalThisMonth == 150.0)
+            val state = awaitItem()
+            assertTrue(state is HomeUiState.Success)
+            state as HomeUiState.Success
+            assertEquals(150.0, state.totalThisMonth, 0.001)
             cancelAndIgnoreRemainingEvents()
         }
     }
@@ -90,8 +102,10 @@ class HomeViewModelTest {
         val viewModel = HomeViewModel(mockUseCases)
 
         viewModel.uiState.test {
-            val state = awaitItem() as HomeUiState.Success
-            assert(state.totalThisMonth == 150.0)
+            val state = awaitItem()
+            assertTrue(state is HomeUiState.Success)
+            state as HomeUiState.Success
+            assertEquals(150.0, state.totalThisMonth, 0.001)
             cancelAndIgnoreRemainingEvents()
         }
     }
@@ -107,6 +121,40 @@ class HomeViewModelTest {
         coVerify(exactly = 1) { mockUseCases.deleteExpense("123") }
     }
 
+    @Test
+    fun `selectCategory updates state with selected category`() = runTest {
+        every { mockUseCases.getExpenses() } returns flowOf(emptyList())
+        val viewModel = HomeViewModel(mockUseCases)
+
+        viewModel.uiState.test {
+            val initialState = awaitItem()
+            assertTrue(initialState is HomeUiState.Success)
+            initialState as HomeUiState.Success
+            assertNull(initialState.selectedCategory)
+
+            val category = Category.FOOD
+            viewModel.selectCategory(category)
+            val updatedState = viewModel.uiState.value as HomeUiState.Success
+            assertEquals(category, updatedState.selectedCategory)
+
+            viewModel.selectCategory(null)
+            val deselectedState = viewModel.uiState.value as HomeUiState.Success
+            assertNull(deselectedState.selectedCategory)
+
+            cancelAndIgnoreRemainingEvents()
+        }
+    }
+
+    @Test
+    fun `selectCategory does not update state if not Success`() = runTest {
+        every { mockUseCases.getExpenses() } returns flow { throw RuntimeException("error") }
+        val viewModel = HomeViewModel(mockUseCases)
+
+        viewModel.selectCategory(Category.FOOD)
+
+        assertTrue(viewModel.uiState.value is HomeUiState.Error)
+    }
+
     private fun createExpense(
         id: String,
         amount: Double,
@@ -115,7 +163,7 @@ class HomeViewModelTest {
         id = id,
         title = "Test",
         amount = amount,
-        category = "FOOD",
+        category = Category.FOOD.name,
         date = date
     )
 }
