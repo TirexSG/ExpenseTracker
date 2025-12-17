@@ -8,6 +8,7 @@ import androidx.navigation.toRoute
 import com.tirexdev.expensetracker.R
 import com.tirexdev.expensetracker.domain.model.Category
 import com.tirexdev.expensetracker.domain.model.Expense
+import com.tirexdev.expensetracker.domain.model.PaymentMethod
 import com.tirexdev.expensetracker.domain.usecase.ExpenseUseCases
 import com.tirexdev.expensetracker.ui.navigation.Routes
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,12 +17,14 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.time.Instant
+import java.time.ZoneId
 import javax.inject.Inject
 
 @HiltViewModel
 class ExpenseEditorViewModel @Inject constructor(
     private val expenseUseCases: ExpenseUseCases,
-    savedStateHandle: SavedStateHandle
+    savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
     private val expenseId: String? = savedStateHandle.toRoute<Routes.ExpenseEditor>().expenseId
@@ -80,9 +83,46 @@ class ExpenseEditorViewModel @Inject constructor(
         // Only allow valid decimal input
         if (amount.isEmpty() || amount.matches(Regex("^\\d*\\.?\\d{0,2}$"))) {
             _uiState.update {
-                it.copy(
-                    amount = amount,
-                    amountError = null
+                it.copy(amount = amount, amountError = null)
+            }
+        }
+    }
+
+    fun onDescriptionChange(description: String) {
+        _uiState.update { it.copy(description = description) }
+    }
+
+    fun onPaymentMethodSelected(method: PaymentMethod) {
+        _uiState.update {
+            it.copy(
+                paymentMethod = method,
+                paymentMethodError = null
+            )
+        }
+    }
+
+    fun onLocationClick() {
+        // TODO
+        _uiState.update { it.copy(location = "Ubicación de ejemplo") }
+    }
+
+    fun onDatePickerShow() {
+        _uiState.update { it.copy(showDatePicker = true) }
+    }
+
+    fun onDatePickerDismiss() {
+        _uiState.update { it.copy(showDatePicker = false) }
+    }
+
+    fun onDateSelected(timestamp: Long?) {
+        timestamp?.let {
+            val dateTime = Instant.ofEpochMilli(it)
+                .atZone(ZoneId.systemDefault())
+                .toLocalDateTime()
+            _uiState.update { state ->
+                state.copy(
+                    selectedDate = dateTime,
+                    showDatePicker = false // Cerrar el picker al seleccionar
                 )
             }
         }
@@ -90,7 +130,10 @@ class ExpenseEditorViewModel @Inject constructor(
 
     fun onCategorySelect(category: Category) {
         _uiState.update {
-            it.copy(selectedCategory = category)
+            it.copy(
+                selectedCategory = category,
+                categoryError = null
+            )
         }
     }
 
@@ -155,7 +198,12 @@ class ExpenseEditorViewModel @Inject constructor(
         }
 
         if (currentState.selectedCategory == null) {
-            // TODO: Show category error (Snackbar or inline)
+            _uiState.update { it.copy(categoryError = R.string.error_category_required) }
+            isValid = false
+        }
+
+        if (currentState.paymentMethod == null) {
+            _uiState.update { it.copy(paymentMethodError = R.string.error_payment_method_required) }
             isValid = false
         }
 

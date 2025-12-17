@@ -41,21 +41,40 @@
     <string name="add_expense_description">Add expense</string>
     <string name="error_title">Oops! Something went wrong</string>
     <string name="retry_button">Retry</string>
+    <string name="dialog_accept">Accept</string>
+    <string name="dialog_cancel">Cancel</string>
 
     <!-- Editor errors -->
     <string name="error_title_empty">Title cannot be empty</string>
     <string name="error_amount_invalid">Enter a valid amount greater than 0</string>
+    <string name="error_category_required">Please select a category</string>
+    <string name="error_payment_method_required">Please select a payment method</string>
 
     <!-- Editor Screen -->
-    <string name="editor_title_new">New Expense</string>
-    <string name="editor_title_edit">Edit Expense</string>
-    <string name="editor_label_title">Title</string>
-    <string name="editor_placeholder_title">E.g: Lunch at restaurant</string>
-    <string name="editor_label_amount">Amount</string>
+    <string name="editor_amount_header">Amount</string>
+    <string name="editor_label_expense_title">Expense title</string>
+    <string name="editor_placeholder_note">Add extra details…</string>
+    <string name="editor_label_note_optional">Note (Optional)</string>
+    <string name="editor_label_date">Date</string>
+    <string name="editor_label_method">Method</string>
+    <string name="editor_label_location">Location</string>
+    <string name="editor_placeholder_location">Add location (Optional)</string>
+    <string name="editor_label_tags">Tags</string>
+    <string name="editor_add_tag">Tag</string>
+    <string name="editor_save_button_full">Save Expense</string>
+    <string name="editor_amount_hint">0.00</string>
+    <string name="editor_title_edit">Edit expense</string>
+    <string name="editor_title_new">New expense</string>
+    <string name="editor_placeholder_title">Enter a title</string>
     <string name="editor_label_category">Category</string>
-    <string name="editor_button_save">Save</string>
-    <string name="back_description">Back</string>
-    
+    <string name="editor_amount_format">%1$s€</string>
+    <string name="editor_amount_zero">0€</string>
+    <string name="back_description">Navigate back</string>
+    <string name="editor_label_payment_method">Payment Method</string>
+    <string name="editor_date_today">Today, %1$s</string>
+    <string name="editor_placeholder_payment_method">Select method</string>
+
+
     <!-- Statistics Screen -->
     <string name="statistics_title">Statistics</string>
     <string name="statistics_total_expenses">Total Expenses</string>

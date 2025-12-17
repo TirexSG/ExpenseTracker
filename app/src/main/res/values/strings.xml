@@ -42,20 +42,39 @@
     <string name="add_expense_description">Añadir gasto</string>
     <string name="error_title">¡Vaya! Algo salió mal</string>
     <string name="retry_button">Reintentar</string>
+    <string name="dialog_accept">Aceptar</string>
+    <string name="dialog_cancel">Cancelar</string>
 
     <!-- Editor errors -->
     <string name="error_title_empty">El título no puede estar vacío</string>
     <string name="error_amount_invalid">Introduce un importe válido mayor a 0</string>
+    <string name="error_category_required">Selecciona una categoría</string>
+    <string name="error_payment_method_required">Selecciona un método de pago</string>
 
     <!-- Editor Screen -->
-    <string name="editor_title_new">Nuevo Gasto</string>
-    <string name="editor_title_edit">Editar Gasto</string>
-    <string name="editor_label_title">Título</string>
-    <string name="editor_placeholder_title">Ej: Almuerzo en restaurante</string>
-    <string name="editor_label_amount">Monto</string>
+    <string name="editor_amount_header">Cantidad</string>
+    <string name="editor_label_expense_title">Título del gasto</string>
+    <string name="editor_placeholder_note">Añade detalles extra…</string>
+    <string name="editor_label_note_optional">Nota (Opcional)</string>
+    <string name="editor_label_date">Fecha</string>
+    <string name="editor_label_method">Método</string>
+    <string name="editor_label_location">Ubicación (Opcional)</string>
+    <string name="editor_placeholder_location">Agregar ubicación</string>
+    <string name="editor_label_tags">Etiquetas</string>
+    <string name="editor_add_tag">Etiqueta</string>
+    <string name="editor_save_button_full">Guardar Gasto</string>
+    <string name="editor_amount_hint">0.00</string>
+    <string name="editor_title_edit">Editar gasto</string>
+    <string name="editor_title_new">Nuevo gasto</string>
+    <string name="editor_placeholder_title">Introduce un título</string>
     <string name="editor_label_category">Categoría</string>
-    <string name="editor_button_save">Guardar</string>
-    <string name="back_description">Volver</string>
+    <string name="editor_amount_format">%1$s€</string>
+    <string name="editor_amount_zero">0€</string>
+    <string name="back_description">Volver atrás</string>
+    <string name="editor_label_payment_method">Método</string>
+    <string name="editor_date_today">Hoy, %1$s</string>
+    <string name="editor_placeholder_payment_method">Seleccionar método</string>
+
 
     <!-- Statistics Screen -->
     <string name="statistics_title">Estadísticas</string>

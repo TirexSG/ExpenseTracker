@@ -57,7 +57,7 @@ suspend fun syncAnimatedItems(
                 animatedItems.indexOfFirst { it.first == item.first && it.second?.id == item.second?.id }
             if (i != -1 && !animatedItems[i].third) {
                 animatedItems[i] = animatedItems[i].copy(third = true)
-                delay(150)
+                delay(100 )
             }
         }
     } else {
@@ -85,7 +85,7 @@ suspend fun syncAnimatedItems(
                 animatedItems.indexOfFirst { it.first == item.first && it.second?.id == item.second?.id }
             if (i != -1 && !animatedItems[i].third) {
                 animatedItems[i] = animatedItems[i].copy(third = true)
-                delay(150)
+                delay(100)
             }
         }
     }
