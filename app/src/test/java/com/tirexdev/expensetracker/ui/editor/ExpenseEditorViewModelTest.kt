@@ -2,6 +2,7 @@ package com.tirexdev.expensetracker.ui.editor
 
 import androidx.lifecycle.SavedStateHandle
 import com.tirexdev.expensetracker.domain.model.Category
+import com.tirexdev.expensetracker.domain.model.PaymentMethod
 import com.tirexdev.expensetracker.domain.usecase.ExpenseUseCases
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -77,6 +78,7 @@ class ExpenseEditorViewModelTest {
         viewModel.onTitleChange("Test")
         viewModel.onAmountChange("20.05")
         viewModel.onCategorySelect(Category.FOOD)
+        viewModel.onPaymentMethodSelected(PaymentMethod.CASH)
 
         viewModel.saveExpense()
         advanceUntilIdle()
@@ -86,7 +88,6 @@ class ExpenseEditorViewModelTest {
         assert(state.saveSuccess)
         coVerify(exactly = 1) { mockUseCases.addExpense(any()) }
     }
-
     @Test
     fun `saveExpense handles failure when useCase fails`() = runTest(testDispatcher) {
         coEvery { mockUseCases.addExpense(any()) } returns Result.failure(Exception("DB error"))
