@@ -83,6 +83,8 @@
     <string name="statistics_by_category">Expenses by Category</string>
     <string name="statistics_no_data">No expenses yet</string>
     <string name="statistics_total_label">Total</string>
+    <string name="statistics_amount_format">%.2f€</string>
+    <string name="statistics_total_format">%.0f€</string>
 
 
 </resources>

@@ -1,11 +1,32 @@
 package com.tirexdev.expensetracker.ui.statistics
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -22,6 +43,7 @@ import co.yml.charts.ui.piechart.charts.PieChart
 import co.yml.charts.ui.piechart.models.PieChartConfig
 import co.yml.charts.ui.piechart.models.PieChartData
 import com.tirexdev.expensetracker.R
+import com.tirexdev.expensetracker.domain.model.ExpenseStatistics
 import com.tirexdev.expensetracker.ui.common.ErrorScreen
 import com.tirexdev.expensetracker.ui.common.LoadingScreen
 import com.tirexdev.expensetracker.util.CategoryConfig
@@ -30,26 +52,39 @@ import com.tirexdev.expensetracker.util.toCategory
 
 @Composable
 fun StatisticsScreen(
-    viewModel: StatisticsViewModel = hiltViewModel()
+    viewModel: StatisticsViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    when (val state = uiState) {
-        is StatisticsUiState.Loading -> LoadingScreen()
-        is StatisticsUiState.Error -> ErrorScreen(
-            message = state.message,
-            onRetry = viewModel::retry
-        )
-        is StatisticsUiState.Success -> StatisticsContent(statistics = state.statistics)
+    Scaffold(
+        containerColor = MaterialTheme.colorScheme.background,
+        contentWindowInsets = WindowInsets(0, 0, 0, 0)
+    ) { padding ->
+        when (val state = uiState) {
+            is StatisticsUiState.Loading -> LoadingScreen(modifier = Modifier.padding(padding))
+            is StatisticsUiState.Error -> ErrorScreen(
+                message = state.message,
+                onRetry = viewModel::retry,
+                modifier = Modifier.padding(padding)
+            )
+
+            is StatisticsUiState.Success -> StatisticsContent(
+                statistics = state.statistics,
+                modifier = Modifier.padding(padding)
+            )
+        }
     }
 }
 
 @Composable
 private fun StatisticsContent(
-    statistics: com.tirexdev.expensetracker.domain.model.ExpenseStatistics
+    statistics: ExpenseStatistics,
+    modifier: Modifier = Modifier,
 ) {
+    val total = statistics.expensesByCategory.values.sum()
+
     LazyColumn(
-        modifier = Modifier.fillMaxSize(),
+        modifier = modifier.fillMaxSize(),
         contentPadding = PaddingValues(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
@@ -58,6 +93,7 @@ private fun StatisticsContent(
                 text = stringResource(R.string.statistics_title),
                 style = MaterialTheme.typography.headlineLarge,
                 fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.onPrimary
             )
         }
 
@@ -69,11 +105,37 @@ private fun StatisticsContent(
                 Text(
                     text = stringResource(R.string.statistics_by_category),
                     style = MaterialTheme.typography.titleLarge,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.onPrimary,
+                    modifier = Modifier.padding(vertical = 4.dp)
                 )
             }
-            items(statistics.expensesByCategory.entries.sortedByDescending { it.value }) { (category, amount) ->
-                CategoryRow(category = category, amount = amount)
+            val sortedEntries = statistics.expensesByCategory.entries.sortedByDescending { it.value }
+
+            item {
+                Card(
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primary),
+                    border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline),
+                    shape = RoundedCornerShape(16.dp),
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Column {
+                        sortedEntries.forEachIndexed { index, (category, amount) ->
+                            val percentage = if (total > 0) (amount / total * 100).toInt() else 0
+                            CategoryRow(
+                                category = category,
+                                amount = amount,
+                                percentage = percentage
+                            )
+                            if (index < sortedEntries.lastIndex) {
+                                HorizontalDivider(
+                                    thickness = 1.dp,
+                                    color = MaterialTheme.colorScheme.outline
+                                )
+                            }
+                        }
+                    }
+                }
             }
         }
     }
@@ -82,12 +144,22 @@ private fun StatisticsContent(
 @Composable
 private fun CategoryChart(expensesByCategory: Map<String, Double>) {
     if (expensesByCategory.isEmpty()) {
-        Card(modifier = Modifier.fillMaxWidth().height(300.dp)) {
+        Card(
+            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primary),
+            border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline),
+            shape = RoundedCornerShape(24.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(300.dp)
+        ) {
             Box(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
             ) {
-                Text(stringResource(R.string.statistics_no_data))
+                Text(
+                    text = stringResource(R.string.statistics_no_data),
+                    color = MaterialTheme.colorScheme.onPrimary
+                )
             }
         }
         return
@@ -107,14 +179,20 @@ private fun CategoryChart(expensesByCategory: Map<String, Double>) {
     val pieChartConfig = PieChartConfig(
         labelVisible = false,
         strokeWidth = 75f,
-        backgroundColor = Color.Transparent,
+        backgroundColor = MaterialTheme.colorScheme.primary,
         activeSliceAlpha = 0.9f,
         isAnimationEnable = true,
         isSumVisible = false,
         chartPadding = 25
     )
 
-    Card(modifier = Modifier.fillMaxWidth()) {
+    Card(
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primary),
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline),
+        shape = RoundedCornerShape(24.dp),
+        modifier = Modifier.fillMaxWidth()
+    ) {
+
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -139,42 +217,58 @@ private fun CategoryChart(expensesByCategory: Map<String, Double>) {
                     Text(
                         text = stringResource(R.string.statistics_total_label),
                         style = MaterialTheme.typography.titleMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                        color = MaterialTheme.colorScheme.onBackground
                     )
                     Text(
-                        text = "€%.0f".format(expensesByCategory.values.sum()),
+                        text = stringResource(R.string.statistics_total_format, expensesByCategory.values.sum()),
                         style = MaterialTheme.typography.headlineLarge,
-                        fontWeight = FontWeight.Bold
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.onPrimary
                     )
                 }
             }
 
-            expensesByCategory.entries.map { (category, amount) ->
-                val categoryEnum = category.toCategory()
-                val color = categoryEnum?.let { CategoryConfig.getVisuals(it).color } ?: Color.Gray
-                val displayName = categoryEnum?.getLocalizedName() ?: category
+            CategoryLegendGrid(expensesByCategory = expensesByCategory)
+        }
+    }
+}
 
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
+@Composable
+private fun CategoryLegendGrid(expensesByCategory: Map<String, Double>) {
+    val entries = expensesByCategory.entries.toList()
+    val chunkedEntries = entries.chunked(2)
+
+    Column(verticalArrangement = Arrangement.spacedBy(12.dp), modifier = Modifier.padding(top = 16.dp)) {
+        chunkedEntries.forEach { rowEntries ->
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                rowEntries.forEach { (category, _) ->
+                    val categoryEnum = category.toCategory()
+                    val color =
+                        categoryEnum?.let { CategoryConfig.getVisuals(it).color } ?: Color.Gray
+                    val displayName = categoryEnum?.getLocalizedName() ?: category
+
                     Row(
+                        modifier = Modifier.weight(1f),
                         horizontalArrangement = Arrangement.spacedBy(8.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Box(
                             modifier = Modifier
-                                .size(16.dp)
-                                .background(color, shape = MaterialTheme.shapes.small)
+                                .size(12.dp)
+                                .background(color, shape = CircleShape)
                         )
-                        Text(displayName, style = MaterialTheme.typography.bodyMedium)
+                        Text(
+                            text = displayName,
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onPrimary
+                        )
                     }
-                    Text(
-                        text = "€%.2f".format(amount),
-                        style = MaterialTheme.typography.bodyMedium,
-                        fontWeight = FontWeight.SemiBold
-                    )
+                }
+                if (rowEntries.size == 1) {
+                    Spacer(modifier = Modifier.weight(1f))
                 }
             }
         }
@@ -182,50 +276,84 @@ private fun CategoryChart(expensesByCategory: Map<String, Double>) {
 }
 
 @Composable
-private fun CategoryRow(category: String, amount: Double) {
+private fun CategoryRow(
+    category: String,
+    amount: Double,
+    percentage: Int,
+) {
     val categoryEnum = category.toCategory()
     val categoryVisuals = categoryEnum?.let { CategoryConfig.getVisuals(it) }
     val displayName = categoryEnum?.getLocalizedName() ?: category
+    val color = categoryVisuals?.color ?: Color.Gray
 
-    Card(modifier = Modifier.fillMaxWidth()) {
-        Row(
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp),
+        horizontalArrangement = Arrangement.spacedBy(12.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Box(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
+                .size(48.dp)
+                .clip(RoundedCornerShape(12.dp))
+                .background(color.copy(alpha = 0.2f)),
+            contentAlignment = Alignment.Center
         ) {
+            categoryVisuals?.icon?.let { icon ->
+                Icon(
+                    imageVector = icon,
+                    contentDescription = null,
+                    tint = color,
+                    modifier = Modifier.size(24.dp)
+                )
+            }
+        }
+
+        Column(
+            modifier = Modifier.weight(1f),
+            verticalArrangement = Arrangement.spacedBy(4.dp)
+        ) {
+            Text(
+                text = displayName,
+                style = MaterialTheme.typography.bodyLarge,
+                fontWeight = FontWeight.Medium,
+                color = MaterialTheme.colorScheme.onPrimary
+            )
+
             Row(
-                horizontalArrangement = Arrangement.spacedBy(12.dp),
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 Box(
                     modifier = Modifier
-                        .size(48.dp)
-                        .clip(CircleShape)
-                        .background(categoryVisuals?.color?.copy(alpha = 0.2f) ?: Color.Gray.copy(alpha = 0.2f)),
-                    contentAlignment = Alignment.Center
+                        .width(80.dp)
+                        .height(4.dp)
+                        .clip(RoundedCornerShape(2.dp))
+                        .background(MaterialTheme.colorScheme.outline.copy(alpha = 0.3f))
                 ) {
-                    categoryVisuals?.icon?.let { icon ->
-                        Icon(
-                            imageVector = icon,
-                            contentDescription = null,
-                            tint = categoryVisuals.color,
-                            modifier = Modifier.size(24.dp)
-                        )
-                    }
+                    Box(
+                        modifier = Modifier
+                            .fillMaxHeight()
+                            .fillMaxWidth(fraction = percentage / 100f)
+                            .clip(RoundedCornerShape(2.dp))
+                            .background(color)
+                    )
                 }
+
                 Text(
-                    text = displayName,
-                    style = MaterialTheme.typography.bodyLarge
+                    text = "$percentage%",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onBackground
                 )
             }
-            Text(
-                text = "€%.2f".format(amount),
-                style = MaterialTheme.typography.bodyLarge,
-                fontWeight = FontWeight.Bold
-            )
         }
+
+        Text(
+            text = stringResource(R.string.statistics_amount_format, amount),
+            style = MaterialTheme.typography.bodyLarge,
+            fontWeight = FontWeight.Bold,
+            color = MaterialTheme.colorScheme.onPrimary
+        )
     }
 }
-

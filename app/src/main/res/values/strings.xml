@@ -84,6 +84,8 @@
     <string name="statistics_by_category">Gastos por Categoría</string>
     <string name="statistics_no_data">Aún no hay gastos</string>
     <string name="statistics_total_label">Total</string>
+    <string name="statistics_amount_format">%.2f€</string>
+    <string name="statistics_total_format">%.0f€</string>
 
 </resources>
 
