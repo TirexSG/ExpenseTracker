@@ -40,11 +40,16 @@ class ExpenseEditorViewModel @Inject constructor(
     }
 
     private fun loadExpense() {
+        val id = expenseId ?: run {
+            Log.e("ExpenseEditorVM", "loadExpense called with null expenseId")
+            return
+        }
+
         viewModelScope.launch {
             _uiState.update { it.copy(isLoadingExpense = true) }
 
             try {
-                val expense = expenseUseCases.getExpenseById(expenseId!!)
+                val expense = expenseUseCases.getExpenseById(id)
                 if (expense != null) {
                     _uiState.update {
                         it.copy(
@@ -60,7 +65,7 @@ class ExpenseEditorViewModel @Inject constructor(
                         )
                     }
                 } else {
-                    Log.e("ExpenseEditorVM", "Expense not found: $expenseId")
+                    Log.e("ExpenseEditorVM", "Expense not found: $id")
                     _uiState.update { it.copy(isLoadingExpense = false) }
                 }
             } catch (e: Exception) {
@@ -122,7 +127,7 @@ class ExpenseEditorViewModel @Inject constructor(
             _uiState.update { state ->
                 state.copy(
                     selectedDate = dateTime,
-                    showDatePicker = false // Cerrar el picker al seleccionar
+                    showDatePicker = false
                 )
             }
         }
