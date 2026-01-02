@@ -6,6 +6,20 @@ Aplicación Android de seguimiento de gastos construida con arquitectura moderna
 
 <img src="https://github.com/TirexSG/ExpenseTracker/actions/workflows/android-ci.yml/badge.svg?branch=develop" alt="Android CI">
 
+## 🎬 Demo (20s)
+
+<a href="https://github.com/TirexSG/ExpenseTracker/releases/download/v0.1.0/expensetrackerdemo.mp4">
+  <img src="assets/demo.gif" width="320" alt="Demo" />
+</a>
+
+## 🖼️ Capturas
+
+<p align="left">
+  <img src="assets/screenshots/01.jpeg" width="250" />
+  <img src="assets/screenshots/02.jpeg" width="250" />
+  <img src="assets/screenshots/03.jpeg" width="250" />
+</p>
+
 ## 🏗️ Stack Tecnológico
 
 - **Lenguaje:** Kotlin
