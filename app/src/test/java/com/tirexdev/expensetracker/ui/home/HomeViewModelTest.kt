@@ -35,9 +35,10 @@ class HomeViewModelTest {
 
     @Test
     fun `init loads expenses and emits Success state`() = runTest {
+        val now = LocalDateTime.now()
         val expenses = listOf(
-            createExpense("1", 100.0),
-            createExpense("2", 50.0)
+            createExpense("1", 100.0, now.withDayOfMonth(2).withHour(12).withMinute(0)),
+            createExpense("2", 50.0, now.withDayOfMonth(3).withHour(12).withMinute(0))
         )
         every { mockUseCases.getExpenses() } returns flowOf(expenses)
 
@@ -73,10 +74,15 @@ class HomeViewModelTest {
 
     @Test
     fun `calculateTotalThisMonth sums only current month expenses`() = runTest {
+        val now = LocalDateTime.now()
+        val currentMonthExpense1 = now.withDayOfMonth(5).withHour(10).withMinute(0).withSecond(0).withNano(0)
+        val currentMonthExpense2 = now.withDayOfMonth(15).withHour(14).withMinute(30).withSecond(0).withNano(0)
+        val previousMonthExpense = now.minusMonths(1).withDayOfMonth(20).withHour(9).withMinute(0).withSecond(0).withNano(0)
+
         val expenses = listOf(
-            createExpense("1", 100.0, LocalDateTime.of(2025, 12, 5, 10, 0)),
-            createExpense("2", 50.0, LocalDateTime.of(2025, 12, 15, 14, 30)),
-            createExpense("3", 999.0, LocalDateTime.of(2025, 11, 20, 9, 0))
+            createExpense("1", 100.0, currentMonthExpense1),
+            createExpense("2", 50.0, currentMonthExpense2),
+            createExpense("3", 999.0, previousMonthExpense)
         )
         every { mockUseCases.getExpenses() } returns flowOf(expenses)
 
@@ -93,9 +99,13 @@ class HomeViewModelTest {
 
     @Test
     fun `calculateTotalThisMonth includes first day of month at midnight`() = runTest {
+        val now = LocalDateTime.now()
+        val firstDayMidnight = now.withDayOfMonth(1).withHour(0).withMinute(0).withSecond(0).withNano(0)
+        val anotherDay = now.withDayOfMonth(10).withHour(12).withMinute(0).withSecond(0).withNano(0)
+
         val expenses = listOf(
-            createExpense("1", 100.0, LocalDateTime.of(2025, 12, 1, 0, 0, 0)),
-            createExpense("2", 50.0, LocalDateTime.of(2025, 12, 10, 12, 0))
+            createExpense("1", 100.0, firstDayMidnight),
+            createExpense("2", 50.0, anotherDay)
         )
         every { mockUseCases.getExpenses() } returns flowOf(expenses)
 
@@ -158,7 +168,7 @@ class HomeViewModelTest {
     private fun createExpense(
         id: String,
         amount: Double,
-        date: LocalDateTime = LocalDateTime.of(2025, 12, 10, 12, 0)
+        date: LocalDateTime = LocalDateTime.now()
     ) = Expense(
         id = id,
         title = "Test",
